@@ -1,0 +1,62 @@
+version: "3.2"
+
+services:
+#MariaDB Container
+  mariadb:
+    image: mariadb:10.7
+    container_name: mariadb
+    hostname: mariadb
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
+    env_file:
+      - ./mariadb.env
+    restart: always
+
+#GLPI Container
+  glpi:
+    build:  . 
+    container_name : glpi
+    hostname: glpi
+    ports:
+      - "80:80"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/www/html/glpi/:/var/www/html/glpi
+    environment:
+      - TIMEZONE=Europe/Brussels
+      - VERSION_GLPI=10.0.7
+    restart: always
+
+#GRAFANA Container
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana_data:/var/lib/grafana
+volumes:
+  grafana_data: {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
