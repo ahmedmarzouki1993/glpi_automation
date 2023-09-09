@@ -15,6 +15,7 @@ services:
 #GLPI Container
   glpi:
     build:  . 
+    image: ahmedmarzouki1993/glpi_automation
     container_name : glpi
     hostname: glpi
     ports:
