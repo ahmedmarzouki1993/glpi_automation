@@ -1,0 +1,51 @@
+
+---
+- name: Login, build and push the glpi_automation app image to dockerhub
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - dockerhub_credentials.yml
+
+  tasks:
+    - name: Log in to Docker Hub
+      docker_login:
+        registry_url: https://index.docker.io/v1/
+        username: "{{ dockerhub_username }}"
+        password: "{{ dockerhub_password }}"
+      delegate_to: localhost
+
+    - name: remove running container  
+      ansible.builtin.command:
+        docker rm -f glpi
+      ignore_errors: yes  
+
+    - name : remove used image of glpi  
+      ansible.builtin.command:
+        docker rmi ahmedmarzouki1993/glpi_automation
+      ignore_errors: yes
+
+    - name : build the image of glpi app from dockerfile
+      ansible.builtin.command:
+        docker build -t ahmedmarzouki1993/glpi_automation .
+      ignore_errors: yes
+
+    - name: push the new glpi  image to dockerhub
+      ansible.builtin.command:
+        docker push ahmedmarzouki1993/glpi_automation
+      ignore_errors: yes
+
+  pre_tasks:
+    - name: Set the vault password from file
+      set_fact:
+        vault_password: "{{ lookup('file', '/home/ahmed/Documents/projects/glpi_automation/vault_password.txt') }}"
+      delegate_to: localhost
+
+    - name: Set VAULT_PASSWORD_FILE environment variable
+      set_fact:
+        ansible_env:
+          VAULT_PASSWORD_FILE: "{{ vault_password }}"
+      delegate_to: localhost
+
+  handlers:
+    - name: Remove the temporary vault password environment variable
+      shell: unset VAULT_PASSWORD_FILE
