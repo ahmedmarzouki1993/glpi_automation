@@ -5,7 +5,7 @@
 
 
   tasks:
-    - name: remove running container  
+    - name: login to dockerhub 
       ansible.builtin.command:
         echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
