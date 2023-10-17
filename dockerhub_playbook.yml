@@ -23,12 +23,12 @@
 
     - name : build the image of glpi app from dockerfile
       ansible.builtin.command:
-        docker build -t ahmedmarzouki1993/glpi_automation .
+        docker build -t ahmedmarzouki1993/glpi_automation:${GIT_COMMIT.take(8) .
       ignore_errors: yes
 
     - name: push the new glpi  image to dockerhub
       ansible.builtin.command:
-        docker push ahmedmarzouki1993/glpi_automation
+        docker push ahmedmarzouki1993/glpi_automation:${GIT_COMMIT.take(8)
       ignore_errors: yes
 
 
