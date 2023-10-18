@@ -23,7 +23,7 @@
 
     - name : build the image of glpi app from dockerfile
       ansible.builtin.command:
-         docker build -t ahmedmarzouki1993/glpi_automation:{{ GIT_COMMIT | regex_replace('^(.{8}).*$', '\\1') }} .
+         docker build -t ahmedmarzouki1993/glpi_automation:{{ ansible_env.GIT_COMMIT | regex_replace('^(.{8}).*$', '\\1') }} .
       ignore_errors: yes
 
     - name: push the new glpi  image to dockerhub
