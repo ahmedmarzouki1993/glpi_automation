@@ -34,7 +34,7 @@
 
     - name: push the new glpi  image to dockerhub
       ansible.builtin.command:
-        docker push ahmedmarzouki1993/glpi_automation::{{ ansible_env.GIT_COMMIT[:8] }}
+        docker push ahmedmarzouki1993/glpi_automation:{{ ansible_env.GIT_COMMIT[:8] }}
       ignore_errors: yes
 
 
