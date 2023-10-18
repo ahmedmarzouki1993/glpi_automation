@@ -18,7 +18,7 @@
 
     - name : remove used image of glpi  
       ansible.builtin.command:
-        docker images -q 'ahmedmarzouki1993/glpi_automation*' | xargs docker rmi
+        docker images -q | grep 'ahmedmarzouki1993/glpi_automation' | xargs docker rmi
       ignore_errors: yes
 
     - name : build the image of glpi app from dockerfile
