@@ -16,10 +16,15 @@
         docker rm -f glpi
       ignore_errors: yes  
 
-    - name : remove used image of glpi  
-      ansible.builtin.command:
-        docker rmi $(docker images -q ahmedmarzouki1993/glpi_automation)
+    - name: Get image ID for the repository
+      command: docker images -q ahmedmarzouki1993/glpi_automation
+      register: image_id
+      changed_when: false
       ignore_errors: yes
+
+    - name: Remove the image
+      command: docker rmi "{{ image_id.stdout_lines[0] }}"
+      when: image_id.stdout_lines|length > 0
 
     - name : build the image of glpi app from dockerfile using commit hash as a tag
       ansible.builtin.command:
