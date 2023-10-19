@@ -36,15 +36,10 @@
 
     - name: push the new glpi  image to dockerhub
       ansible.builtin.command:
-        echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
         docker push ahmedmarzouki1993/glpi_automation:{{ ansible_env.GIT_COMMIT[:8] }}
       ignore_errors: yes
 
-    - name: configure git 
-      ansible.builtin.command:
-        git config --global user.email "$GIT_CONFIG_EMAIL"
-        git config --global user.name "$GIT_CONFIG_NAME"
-      ignore_errors: yes 
+
 
 
 
