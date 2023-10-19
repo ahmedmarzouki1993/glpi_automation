@@ -2,7 +2,9 @@
 ---
 - name: Login, build and push the glpi_automation app image to dockerhub
   hosts: localhost
-
+  environment:
+    HOME: '/tmp'
+    CONFIG_REPO_URL: "github.com/ahmedmarzouki1993/glpi_kubernetes.git"
 
   tasks:
     - name: login to dockerhub 
@@ -36,6 +38,12 @@
       ansible.builtin.command:
         docker push ahmedmarzouki1993/glpi_automation:{{ ansible_env.GIT_COMMIT[:8] }}
       ignore_errors: yes
+
+    - name: configure git 
+      ansible.builtin.command:
+        git config --global user.email "$GIT_CONFIG_EMAIL"
+        git config --global user.name "$GIT_CONFIG_NAME"
+      ignore_errors: yes 
 
 
 
