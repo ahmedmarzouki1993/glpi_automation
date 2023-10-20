@@ -51,7 +51,8 @@
         git config --global user.email "$GIT_CONFIG_EMAIL"
         git config --global user.name "$GIT_CONFIG_NAME"
         cd glpi-manifest-files
-        sed -i '/^ *image: ahmedmarzouki1993\/glpi_automation.*/ s/^ */    /' deployment_glpi.yml
+        sed -i 's/^ *image: ahmedmarzouki1993\/glpi_automation.*/          image: ahmedmarzouki1993\/glpi_automation:{{ ansible_env.GIT_COMMIT[:8] }}/' deployment_glpi.yml
+
         git add .
         git commit -am "change container build version to build {{ ansible_env.GIT_COMMIT[:8] }}/"
         git push
