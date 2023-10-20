@@ -47,7 +47,7 @@
 
     - name: Work on the cloned repository
       ansible.builtin.shell: |
-        cd /tmp/gitops-config
+        cd /tmp/glpi_kubernetes
         git config --global user.email "$GIT_CONFIG_EMAIL"
         git config --global user.name "$GIT_CONFIG_NAME"
         cd glpi-manifest-files
