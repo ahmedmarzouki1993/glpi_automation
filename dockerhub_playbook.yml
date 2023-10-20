@@ -38,11 +38,11 @@
       ignore_errors: yes
 
     - name: Configure Git User Email
-      ansible.builtin.command: git config --global user.email "{{ GIT_CONFIG_EMAIL }}"
+      ansible.builtin.command: git config --global user.email "$GIT_CONFIG_EMAIL"
       ignore_errors: yes
 
     - name: Configure Git User Name
-      ansible.builtin.command: git config --global user.name "{{ GIT_CONFIG_NAME }}"
+      ansible.builtin.command: git config --global user.name "$GIT_CONFIG_NAME"
       ignore_errors: yes
 
 
