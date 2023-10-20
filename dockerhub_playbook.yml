@@ -10,13 +10,21 @@
     - name: login to dockerhub 
       ansible.builtin.command:
         echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-
+      args:
+        stdin: "$DOCKERHUB_PASSWORD"
+      register: login_result
+      changed_when: false
       ignore_errors: yes  
 
     - name: remove running container  
       ansible.builtin.command:
         docker rm -f glpi
       ignore_errors: yes  
+
+    - name: Handle Docker Hub Login Result
+      fail:
+        msg: "Failed to login to Docker Hub. Check your credentials."
+      when: login_result.rc != 0  
 
     - name: Get image ID for the repository
       command: docker images -q ahmedmarzouki1993/glpi_automation
