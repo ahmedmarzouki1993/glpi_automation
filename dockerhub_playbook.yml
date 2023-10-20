@@ -37,13 +37,7 @@
         docker push ahmedmarzouki1993/glpi_automation:{{ ansible_env.GIT_COMMIT[:8] }}
       ignore_errors: yes
 
-    - name: Configure Git User Email
-      ansible.builtin.command: git config --global user.email "$GIT_CONFIG_EMAIL"
-      ignore_errors: yes
 
-    - name: Configure Git User Name
-      ansible.builtin.command: git config --global user.name "$GIT_CONFIG_NAME"
-      ignore_errors: yes
 
 
 
